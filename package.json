@@ -1,0 +1,22 @@
+{
+  "scripts": {
+    "dev": "tsx watch src/index.ts",
+    "generate-api": "orval --config ./orval.config.ts",
+    "prettier:check": "prettier --check .",
+    "prettier:write": "prettier --write .",
+    "ncu": "ncu",
+    "ncu-upgrade": "ncu --upgrade --filterVersion '^*'"
+  },
+  "dependencies": {
+    "@hono/node-server": "^1.9.0"
+  },
+  "devDependencies": {
+    "@hono/zod-validator": "^0.2.1",
+    "@types/node": "^20.11.17",
+    "hono": "^4.2.3",
+    "npm-check-updates": "^16.14.18",
+    "orval": "^6.27.1",
+    "prettier": "^3.2.5",
+    "tsx": "^4.7.1"
+  }
+}

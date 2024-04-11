@@ -1,0 +1,194 @@
+openapi: 3.0.3
+info:
+  title: Petstore
+  description: Petstore
+  version: 0.1.0
+servers:
+  - url: https://localhost:3000
+tags:
+  - name: pets
+    description: Everything about pets
+paths:
+  /pets:
+    post:
+      tags:
+        - pet
+      summary: Create pet
+      description: Create a pet
+      operationId: petCreate
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Pet'
+        required: true
+      responses:
+        '200':
+          description: Successful operation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Pet'
+        '400':
+          description: Invalid input
+    get:
+      tags:
+        - pet
+      summary: List pets
+      description: List all pets
+      operationId: petList
+      parameters:
+        - name: type
+          in: query
+          description: Pet type
+          required: false
+          schema:
+            $ref: '#/components/schemas/PetType'
+      responses:
+        '200':
+          description: Successful operation
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Pet'
+  /pets/{petId}:
+    get:
+      tags:
+        - pet
+      summary: Retrieve pet
+      description: Retrieve a single pet
+      operationId: petRetrieve
+      parameters:
+        - name: petId
+          in: path
+          description: Pet ID
+          required: true
+          schema:
+            type: integer
+      responses:
+        '200':
+          description: Successful operation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Pet'
+        '404':
+          description: Pet not found
+    put:
+      tags:
+        - pet
+      summary: Update pet
+      description: Update a pet
+      operationId: petUpdate
+      parameters:
+        - name: petId
+          in: path
+          description: Pet ID
+          required: true
+          schema:
+            type: integer
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Pet'
+        required: true
+      responses:
+        '200':
+          description: Successful operation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Pet'
+        '400':
+          description: Invalid input
+        '404':
+          description: Pet not found
+    delete:
+      tags:
+        - pet
+      summary: Delete pet
+      description: Delete a pet
+      operationId: petDelete
+      parameters:
+        - name: petId
+          in: path
+          description: Pet ID
+          required: true
+          schema:
+            type: integer
+      responses:
+        '204':
+          description: Successful operation
+        '404':
+          description: Pet not found
+components:
+  schemas:
+    Pet:
+      type: object
+      properties:
+        id:
+          type: integer
+          nullable: true
+        type:
+          $ref: '#/components/schemas/PetType'
+        name:
+          type: string
+        dateOfBirth:
+          type: string
+          format: date
+          nullable: true
+        breed:
+          type: string
+          nullable: true
+        weight:
+          type: number
+          format: float
+          nullable: true
+      required:
+        - id
+        - type
+        - name
+        - dateOfBirth
+        - breed
+        - weight
+    # PetBase:
+    #   type: object
+    #   properties:
+    #     type:
+    #       $ref: '#/components/schemas/PetType'
+    #     name:
+    #       type: string
+    #     dateOfBirth:
+    #       type: string
+    #       format: date
+    #       nullable: true
+    #     breed:
+    #       type: string
+    #       nullable: true
+    #     weight:
+    #       type: number
+    #       format: float
+    #       nullable: true
+    #   required:
+    #     - type
+    #     - name
+    #     - dateOfBirth
+    #     - breed
+    #     - weight
+    # Pet:
+    #   allOf:
+    #     - $ref: '#/components/schemas/PetBase'
+    #     - type: object
+    #       properties:
+    #         id:
+    #           type: integer
+    #       required:
+    #         - id
+    PetType:
+      type: string
+      enum:
+        - DOG
+        - CAT
